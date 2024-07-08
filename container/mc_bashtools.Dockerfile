@@ -8,5 +8,7 @@ RUN apk update && \
     apk add --no-cache minio-client grep sed gawk coreutils && \
     rm -rf /var/cache/apk/*
 
+# create alias for minio-client to mc
+RUN ln -s /usr/bin/mcli /usr/bin/mc
 
 ENTRYPOINT ["mc"]
