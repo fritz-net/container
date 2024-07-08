@@ -15,18 +15,24 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
+
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
       contents: read
       packages: write
       attestations: write
       id-token: write
+
     # matrix for IMAGE_NAME 
     strategy:
       matrix:
         IMAGE_NAME:
         #- ${{ github.repository }}
         - mc_bashtools
+
+    env:
+      USERNAME: ${{ github.actor }}
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -44,7 +50,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
       with:
-        images: ${{ env.REGISTRY }}/${{ matrix.IMAGE_NAME }}
+        images: ${{ env.REGISTRY }}/${{ github.actor }}/${{ matrix.IMAGE_NAME }}
 
     - name: Build and push Docker image
       # This step uses the `docker/build-push-action` action to build the image, based on your repository's `Dockerfile`. If the build succeeds, it pushes the image to GitHub Packages.
