@@ -6,6 +6,8 @@ FROM alpine:3.20.1
 
 RUN apk update && \
     apk add --no-cache minio-client grep sed gawk coreutils && \
+    # 7z
+    apk add --no-cache p7zip && \
     rm -rf /var/cache/apk/*
 
 # create alias for minio-client to mc
